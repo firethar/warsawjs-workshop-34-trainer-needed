@@ -2,11 +2,22 @@
     let socket = null;
 
     function sendMessage(data) {
+        console.log('sendMessage', data);
         const payload = data;
         socket.send(JSON.stringify(payload));
     }
 
+    function reconnect() {
+        const time = 5678; // ms
+        setTimeout(() => {
+            console.log('reconnect', time);
+            setupServer();
+        }, time);
+    }
+
     function setupServer() {
+        console.log('setupServer');
+
         socket = new WebSocket(root.app.config.url);
 
         socket.addEventListener('open', () => {
@@ -28,11 +39,13 @@
         });
         socket.addEventListener('close', () => {
             console.log('client close');
+            reconnect();
         });
         socket.addEventListener('error', () => {
             console.log('client error');
+            reconnect();
         });
     }
-    Object.assign(root.app, { sendMessage, setupServer });
+    Object.assign(root.app, { sendMessage, setupServer, reconnect });
 
 }(window));

@@ -1,7 +1,9 @@
 (function (root) {
 
+
     function main() {
-        console.log('hello world');
+        root.app.setupServer();
+        root.app.setupUI();
     }
 
     root.addEventListener('DOMContentLoaded', main);

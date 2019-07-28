@@ -7,8 +7,12 @@
         socket.send(JSON.stringify(payload));
     }
 
+    function getRandomInteger(from, to) {
+        return Math.random() * (to - from) + from;
+    }
+
     function reconnect() {
-        const time = 5678; // ms
+        const time = getRandomInteger(4000, 10000); // ms
         setTimeout(() => {
             console.log('reconnect', time);
             setupServer();
